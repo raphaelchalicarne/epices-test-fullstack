@@ -13,14 +13,14 @@ Vous devrez construire une application permettant à un·e utilisateur·ice de :
 # Spécifications techniques
 
 Il vous faudra réaliser une interface web simple (pas de mise en forme CSS demandée) qui permet de :
-- envoyer un fichier CSV à charger au format CSV uniquement. Elles contiennent la production horaire de chaque onduleur. *(cf fichiers de production en pièces jointes)*
+- envoyer un fichier CSV à charger au format CSV uniquement. Elles contiennent la production horaire de chaque onduleur. *(cf fichiers .csv dans ce repository)*
 - voir la production totale d'une journée (au choix de l'utilisateur·ice) pour l'ensemble du système avec le total et la production par heure
 
 Dans la base de données on devra pouvoir disposer :
 - des données horaires de chaque onduleur
 - des données consolidées (somme des énergies) sur la journée pour l'ensemble du système
--
-Pour ce faire, nous mettons à votre disposition un starter d'application `RubyOnRails` + `SQLite` mais, il vous est possible d'utiliser une ou des technologie(s) équivalente(s) si vous n'êtes vraiment pas à l'aise avec `RubyOnRails`` (ex: `Django`, `Symfony`, `Laravel`, etc.).
+
+Pour ce faire, nous mettons à votre disposition un starter d'application `RubyOnRails` + `SQLite` mais, il vous est possible d'utiliser une ou des technologie(s) équivalente(s) si vous n'êtes vraiment pas à l'aise avec `RubyOnRails` (ex: `Django`, `Symfony`, `Laravel`, etc.).
 
 # Nous observerons
 
