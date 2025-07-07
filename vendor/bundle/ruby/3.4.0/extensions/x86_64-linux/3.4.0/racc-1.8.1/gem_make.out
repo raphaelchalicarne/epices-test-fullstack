@@ -1,0 +1,18 @@
+current directory: /home/rails/starterpack/vendor/bundle/ruby/3.4.0/gems/racc-1.8.1/ext/racc/cparse
+/home/rails/.local/share/mise/installs/ruby/3.4.4/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /home/rails/starterpack/vendor/bundle/ruby/3.4.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20250707-37876-ae32xp sitelibdir\=./.gem.20250707-37876-ae32xp clean
+
+current directory: /home/rails/starterpack/vendor/bundle/ruby/3.4.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20250707-37876-ae32xp sitelibdir\=./.gem.20250707-37876-ae32xp
+compiling cparse.c
+linking shared-object racc/cparse.so
+
+current directory: /home/rails/starterpack/vendor/bundle/ruby/3.4.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20250707-37876-ae32xp sitelibdir\=./.gem.20250707-37876-ae32xp install
+/usr/bin/install -c -m 0755 cparse.so ./.gem.20250707-37876-ae32xp/racc
+
+current directory: /home/rails/starterpack/vendor/bundle/ruby/3.4.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20250707-37876-ae32xp sitelibdir\=./.gem.20250707-37876-ae32xp clean

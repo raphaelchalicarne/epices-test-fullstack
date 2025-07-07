@@ -1,0 +1,19 @@
+current directory: /home/rails/starterpack/vendor/bundle/ruby/3.4.0/gems/stringio-3.1.7/ext/stringio
+/home/rails/.local/share/mise/installs/ruby/3.4.4/bin/ruby extconf.rb
+checking for rb_io_mode_t in ruby/io.h... no
+creating Makefile
+
+current directory: /home/rails/starterpack/vendor/bundle/ruby/3.4.0/gems/stringio-3.1.7/ext/stringio
+make DESTDIR\= sitearchdir\=./.gem.20250707-37876-lunzub sitelibdir\=./.gem.20250707-37876-lunzub clean
+
+current directory: /home/rails/starterpack/vendor/bundle/ruby/3.4.0/gems/stringio-3.1.7/ext/stringio
+make DESTDIR\= sitearchdir\=./.gem.20250707-37876-lunzub sitelibdir\=./.gem.20250707-37876-lunzub
+compiling stringio.c
+linking shared-object stringio.so
+
+current directory: /home/rails/starterpack/vendor/bundle/ruby/3.4.0/gems/stringio-3.1.7/ext/stringio
+make DESTDIR\= sitearchdir\=./.gem.20250707-37876-lunzub sitelibdir\=./.gem.20250707-37876-lunzub install
+/usr/bin/install -c -m 0755 stringio.so ./.gem.20250707-37876-lunzub
+
+current directory: /home/rails/starterpack/vendor/bundle/ruby/3.4.0/gems/stringio-3.1.7/ext/stringio
+make DESTDIR\= sitearchdir\=./.gem.20250707-37876-lunzub sitelibdir\=./.gem.20250707-37876-lunzub clean
