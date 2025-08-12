@@ -1,6 +1,6 @@
 require "test_helper"
 
-class PowerInverterTest < ActiveSupport::TestCase
+class PowerInverterProductionTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

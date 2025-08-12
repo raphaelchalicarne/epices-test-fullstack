@@ -1,2 +1,0 @@
-class PowerInverter < ApplicationRecord
-end
