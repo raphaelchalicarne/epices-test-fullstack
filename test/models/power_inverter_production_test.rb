@@ -24,4 +24,8 @@ class PowerInverterProductionTest < ActiveSupport::TestCase
       )
     assert_not power_inverter_production.save
   end
+
+  test "should save power_inverter_production with identifier, datetime and energy attributes" do
+    assert power_inverter_productions(:one).save
+  end
 end
