@@ -1,6 +1,6 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one: {}
+one:
   identifier: 1
   datetime: DateTime.strptime('10/07/25 06:00', '%d/%m/%y %H:%M')
   energy: 343
