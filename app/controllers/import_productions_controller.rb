@@ -4,7 +4,6 @@ class ImportProductionsController < ApplicationController
 
   def import
     uploaded_file = params[:production_file]
-    Rails.logger.info uploaded_file
     if uploaded_file.present?
       csv_data = CSV.parse(uploaded_file.read, headers: true)
       csv_data.each do |row|
