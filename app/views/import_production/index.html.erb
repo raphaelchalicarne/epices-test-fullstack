@@ -7,6 +7,8 @@
   <body>
     <h1>Import production data</h1>
     <p>Import a production data file below. (Only .csv accepted)</p>
-    <input type="file" accept=".csv, text/csv"></input>
+    <%= form_with url: "/uploads", multipart: false do |form| %>
+      <%= file_field_tag :production_file, accept: ".csv, text/csv" %>
+    <% end %>          
   </body>
 </html>
