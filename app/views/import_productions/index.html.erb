@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Import production data</title>
+    <% content_for :title, "Import production data" %>
   </head>
 
   <body>
     <h1>Import production data</h1>
     <p>Import a production data file below. (Only .csv accepted)</p>
-    <%= form_with url: "/uploads", multipart: false do |form| %>
+    <%= form_with url: import_path, multipart: true do |form| %>
       <%= file_field_tag :production_file, accept: ".csv, text/csv" %>
-    <% end %>          
+      <%= submit_tag "Submit" %>
+    <% end %>
   </body>
 </html>
