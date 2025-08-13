@@ -4,15 +4,29 @@ class ImportProductionsController < ApplicationController
 
   def import
     uploaded_file = params[:production_file]
-    if uploaded_file.present?
+
+    if uploaded_file.respond_to?(:read)
+      uploaded_file.rewind
+    else
+      render plain: "Le fichier envoyé est invalide", status: :bad_request and return
+    end
+
+    begin
       csv_data = CSV.parse(uploaded_file.read, headers: true)
-      csv_data.each do |row|
-        PowerInverterProduction.create(
-          identifier: row["identifier"],
-          datetime: DateTime.strptime(row["datetime"], "%d/%m/%y %H:%M"),
-          energy: row["energy"]
-          )
-      end
+    rescue CSV::MalformedCSVError => e
+      render plain: "Erreur de parsing CSV : #{e.message}", status: :unprocessable_entity and return
+    end
+
+    csv_data.each do |row|
+      PowerInverterProduction.create!(
+        identifier: row["identifier"],
+        datetime: DateTime.strptime(row["datetime"].to_s, "%d/%m/%y %H:%M"),
+        energy: row["energy"]
+      )
+    end
+
+    respond_to do |format|
+      format.html { redirect_to root_path, notice: "Successfully imported the CSV file." }
     end
   end
 end
