@@ -29,12 +29,18 @@ class ImportProductionsController < ApplicationController
       render plain: "Missing headers : #{missing_headers.join(', ')}", status: :unprocessable_entity and return
     end
 
-    csv_data.each do |row|
-      PowerInverterProduction.create!(
-        identifier: row["identifier"],
-        datetime: DateTime.strptime(row["datetime"].to_s, "%d/%m/%y %H:%M"),
-        energy: row["energy"]
-      )
+    begin
+      ActiveRecord::Base.transaction do
+        csv_data.each do |row|
+          PowerInverterProduction.create!(
+            identifier: row["identifier"],
+            datetime: DateTime.strptime(row["datetime"].to_s, "%d/%m/%y %H:%M"),
+            energy: row["energy"]
+          )
+        end
+      end
+    rescue => e
+      render plain: "Missing data : #{e.message}", status: :unprocessable_entity and return
     end
 
     respond_to do |format|

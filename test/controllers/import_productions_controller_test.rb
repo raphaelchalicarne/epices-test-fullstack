@@ -53,4 +53,17 @@ class ImportProductionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
     assert_equal "Missing headers : energy", @response.body
   end
+
+  test "should reject CSV with missing data" do
+    missing_data_csv_path = Rails.root.join("test", "fixtures", "files", "inverter_production_missing_data.csv")
+    assert File.exist?(missing_data_csv_path), "The test CSV file was not found."
+    missing_data_file = Rack::Test::UploadedFile.new(missing_data_csv_path, "text/csv")
+
+    assert_difference("PowerInverterProduction.count", 0) do
+      post import_path, params: { production_file: missing_data_file }
+    end
+
+    assert_response :unprocessable_entity
+    assert_equal "Missing data : Validation failed: Identifier can't be blank", @response.body
+  end
 end
