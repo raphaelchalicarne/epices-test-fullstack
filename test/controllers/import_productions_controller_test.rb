@@ -45,7 +45,7 @@ class ImportProductionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should reject CSV with missing headers" do
-    missing_headers_file_path = Rails.root.join("test", "fixtures", "files", "missing_headers.csv")
+    missing_headers_file_path = Rails.root.join("test", "fixtures", "files", "inverter_production_missing_headers.csv")
     assert File.exist?(missing_headers_file_path), "The test CSV file was not found."
     missing_headers_file = Rack::Test::UploadedFile.new(missing_headers_file_path, "text/csv")
 
