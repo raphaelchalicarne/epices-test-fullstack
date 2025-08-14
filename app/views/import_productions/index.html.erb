@@ -6,7 +6,6 @@
 
   <body>
     <h1>Import production data</h1>
-    <p>Import a production data file below. (Only .csv accepted)</p>
 
     <% if flash[:alert] %>
       <div class="alert"><%= flash[:alert] %></div>
@@ -17,6 +16,7 @@
     <% end %>
 
     <%= form_with url: import_path, multipart: true do |form| %>
+      <%= form.label :production_file, "Import a production data file. (Only .csv accepted)" %>
       <%= file_field_tag :production_file, accept: ".csv, text/csv" %>
       <%= submit_tag "Submit" %>
     <% end %>
