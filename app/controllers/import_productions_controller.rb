@@ -9,28 +9,24 @@ class ImportProductionsController < ApplicationController
       uploaded_file.rewind
     else
       error_message = "The file sent is invalid"
-      flash_render(error_message, :alert, :bad_request) and return
-    end
+      flash.now[:alert] = error_message
+      render :index, status: :bad_request and return    end
 
     csv_content = uploaded_file.read
     if csv_content.blank?
       error_message = "Empty CSV file"
-      flash_render(error_message, :alert, :bad_request) and return
+      flash.now[:alert] = error_message
+      render :index, status: :bad_request and return
     end
 
-    begin
-      csv_data = CSV.parse(csv_content, headers: true)
-    rescue CSV::MalformedCSVError => e
-      error_message = "CSV parsing error : #{e.message}"
-      flash_render(error_message, :alert, :unprocessable_entity)
-    end
-
+    csv_data = CSV.parse(csv_content, headers: true)
     required_headers = [ "identifier", "datetime", "energy" ]
     csv_headers = csv_data.headers
     missing_headers = required_headers - csv_headers
     unless missing_headers.empty?
       error_message = "Missing headers : #{missing_headers.join(', ')}"
-      flash_render(error_message, :alert, :unprocessable_entity) and return
+      flash.now[:alert] = error_message
+      render :index, status: :unprocessable_entity and return
     end
 
     begin
@@ -53,14 +49,11 @@ class ImportProductionsController < ApplicationController
       end
     rescue => e
       error_message = "CSV import error : #{e.message}"
-      flash_render(error_message, :alert, :unprocessable_entity) and return
+      flash.now[:alert] = error_message
+      render :index, status: :unprocessable_entity and return
     end
 
-    flash_render("Successfully imported the CSV file.", :notice, :created)
-  end
-
-  def flash_render(message, flash_type, status)
-    flash.now[flash_type] = message
-    render plain: message, status: status
+    flash.now[:notice] = "Successfully imported the CSV file."
+    render :index, status: :created
   end
 end

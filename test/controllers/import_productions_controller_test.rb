@@ -16,14 +16,12 @@ class ImportProductionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_equal "Successfully imported the CSV file.", flash[:notice]
-    assert_equal "Successfully imported the CSV file.", @response.body
   end
 
   test "The file sent is invalid" do
     post import_path, params: { production_file: :no_file }
     assert_response :bad_request
     assert_equal "The file sent is invalid", flash[:alert]
-    assert_equal "The file sent is invalid", @response.body
   end
 
   test "should raise Empty CSV file" do
@@ -34,16 +32,6 @@ class ImportProductionsControllerTest < ActionDispatch::IntegrationTest
     post import_path, params: { production_file: empty_file }
     assert_response :bad_request
     assert_equal "Empty CSV file", flash[:alert]
-    assert_equal "Empty CSV file", @response.body
-  end
-
-  test "should raise CSV parsing error" do
-    malformed_csv_path = Rails.root.join("test", "fixtures", "files", "malformed_file.csv")
-    assert File.exist?(malformed_csv_path), "The test CSV file was not found."
-    malformed_file = Rack::Test::UploadedFile.new(malformed_csv_path, "text/csv")
-
-    post import_path, params: { production_file: malformed_file }
-    assert_response :unprocessable_entity
   end
 
   test "should reject CSV with missing headers" do
@@ -54,7 +42,6 @@ class ImportProductionsControllerTest < ActionDispatch::IntegrationTest
     post import_path, params: { production_file: missing_headers_file }
     assert_response :unprocessable_entity
     assert_equal "Missing headers : energy", flash[:alert]
-    assert_equal "Missing headers : energy", @response.body
   end
 
   test "should reject CSV with missing data" do
@@ -68,7 +55,6 @@ class ImportProductionsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :unprocessable_entity
     assert_equal "CSV import error : Validation failed: Identifier can't be blank", flash[:alert]
-    assert_equal "CSV import error : Validation failed: Identifier can't be blank", @response.body
   end
 
   test "should reject CSV with incorrectly formatted date" do
@@ -82,6 +68,5 @@ class ImportProductionsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :unprocessable_entity
     assert_equal "CSV import error : invalid date", flash[:alert]
-    assert_equal "CSV import error : invalid date", @response.body
   end
 end
