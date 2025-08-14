@@ -8,25 +8,33 @@ class ImportProductionsController < ApplicationController
     if uploaded_file.respond_to?(:read)
       uploaded_file.rewind
     else
-      render plain: "The file sent is invalid", status: :bad_request and return
+      error_message = "The file sent is invalid"
+      flash.now[:alert] = error_message
+      render plain: error_message, status: :bad_request and return
     end
 
     csv_content = uploaded_file.read
     if csv_content.blank?
-      render plain: "Empty CSV file", status: :bad_request and return
+      error_message = "Empty CSV file"
+      flash.now[:alert] = error_message
+      render plain: error_message, status: :bad_request and return
     end
 
     begin
       csv_data = CSV.parse(csv_content, headers: true)
     rescue CSV::MalformedCSVError => e
-      render plain: "CSV parsing error : #{e.message}", status: :unprocessable_entity and return
+      error_message = "CSV parsing error : #{e.message}"
+      flash.now[:alert] = error_message
+      render plain: error_message, status: :unprocessable_entity and return
     end
 
     required_headers = [ "identifier", "datetime", "energy" ]
     csv_headers = csv_data.headers
     missing_headers = required_headers - csv_headers
     unless missing_headers.empty?
-      render plain: "Missing headers : #{missing_headers.join(', ')}", status: :unprocessable_entity and return
+      error_message = "Missing headers : #{missing_headers.join(', ')}"
+      flash.now[:alert] = error_message
+      render plain: error_message, status: :unprocessable_entity and return
     end
 
     begin
@@ -48,11 +56,13 @@ class ImportProductionsController < ApplicationController
         end
       end
     rescue => e
-      render plain: "CSV import error : #{e.message}", status: :unprocessable_entity and return
+      error_message = "CSV import error : #{e.message}"
+      flash.now[:alert] = error_message
+      render plain: error_message, status: :unprocessable_entity and return
     end
 
-    respond_to do |format|
-      format.html { redirect_to root_path, notice: "Successfully imported the CSV file." }
-    end
+    notice_message = "Successfully imported the CSV file."
+    flash.now[:notice] = notice_message
+    render plain: notice_message, status: :created and return
   end
 end

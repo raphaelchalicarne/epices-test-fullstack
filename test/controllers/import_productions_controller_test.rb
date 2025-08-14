@@ -15,13 +15,14 @@ class ImportProductionsControllerTest < ActionDispatch::IntegrationTest
       post import_path, params: { production_file: uploaded_file }
     end
 
-    assert_redirected_to root_path
     assert_equal "Successfully imported the CSV file.", flash[:notice]
+    assert_equal "Successfully imported the CSV file.", @response.body
   end
 
   test "The file sent is invalid" do
     post import_path, params: { production_file: :no_file }
     assert_response :bad_request
+    assert_equal "The file sent is invalid", flash[:alert]
     assert_equal "The file sent is invalid", @response.body
   end
 
@@ -32,6 +33,7 @@ class ImportProductionsControllerTest < ActionDispatch::IntegrationTest
 
     post import_path, params: { production_file: empty_file }
     assert_response :bad_request
+    assert_equal "Empty CSV file", flash[:alert]
     assert_equal "Empty CSV file", @response.body
   end
 
@@ -51,6 +53,7 @@ class ImportProductionsControllerTest < ActionDispatch::IntegrationTest
 
     post import_path, params: { production_file: missing_headers_file }
     assert_response :unprocessable_entity
+    assert_equal "Missing headers : energy", flash[:alert]
     assert_equal "Missing headers : energy", @response.body
   end
 
@@ -64,6 +67,7 @@ class ImportProductionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_entity
+    assert_equal "CSV import error : Validation failed: Identifier can't be blank", flash[:alert]
     assert_equal "CSV import error : Validation failed: Identifier can't be blank", @response.body
   end
 
@@ -77,6 +81,7 @@ class ImportProductionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_entity
+    assert_equal "CSV import error : invalid date", flash[:alert]
     assert_equal "CSV import error : invalid date", @response.body
   end
 end
