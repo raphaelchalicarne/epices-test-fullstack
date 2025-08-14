@@ -22,6 +22,13 @@ class ImportProductionsController < ApplicationController
       render plain: "CSV parsing error : #{e.message}", status: :unprocessable_entity and return
     end
 
+    required_headers = [ "identifier", "datetime", "energy" ]
+    csv_headers = csv_data.headers
+    missing_headers = required_headers - csv_headers
+    unless missing_headers.empty?
+      render plain: "Missing headers : #{missing_headers.join(', ')}", status: :unprocessable_entity and return
+    end
+
     csv_data.each do |row|
       PowerInverterProduction.create!(
         identifier: row["identifier"],

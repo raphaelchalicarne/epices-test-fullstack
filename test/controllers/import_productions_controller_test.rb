@@ -43,4 +43,14 @@ class ImportProductionsControllerTest < ActionDispatch::IntegrationTest
     post import_path, params: { production_file: malformed_file }
     assert_response :unprocessable_entity
   end
+
+  test "should reject CSV with missing headers" do
+    missing_headers_file_path = Rails.root.join("test", "fixtures", "files", "missing_headers.csv")
+    assert File.exist?(missing_headers_file_path), "The test CSV file was not found."
+    missing_headers_file = Rack::Test::UploadedFile.new(missing_headers_file_path, "text/csv")
+
+    post import_path, params: { production_file: missing_headers_file }
+    assert_response :unprocessable_entity
+    assert_equal "Missing headers : energy", @response.body
+  end
 end
