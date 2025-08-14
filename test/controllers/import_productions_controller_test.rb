@@ -18,4 +18,13 @@ class ImportProductionsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_path
     assert_equal "Successfully imported the CSV file.", flash[:notice]
   end
+
+  test "should raise CSV parsing error" do
+    malformed_csv_path = Rails.root.join("test", "fixtures", "files", "malformed_file.csv")
+    assert File.exist?(malformed_csv_path), "The test CSV file was not found."
+    malformed_file = Rack::Test::UploadedFile.new(malformed_csv_path, "text/csv")
+
+    post import_path, params: { production_file: malformed_file }
+    assert_response :unprocessable_entity
+  end
 end
