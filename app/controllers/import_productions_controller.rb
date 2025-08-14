@@ -8,13 +8,13 @@ class ImportProductionsController < ApplicationController
     if uploaded_file.respond_to?(:read)
       uploaded_file.rewind
     else
-      render plain: "Le fichier envoyé est invalide", status: :bad_request and return
+      render plain: "The file sent is invalid", status: :bad_request and return
     end
 
     begin
       csv_data = CSV.parse(uploaded_file.read, headers: true)
     rescue CSV::MalformedCSVError => e
-      render plain: "Erreur de parsing CSV : #{e.message}", status: :unprocessable_entity and return
+      render plain: "CSV parsing error : #{e.message}", status: :unprocessable_entity and return
     end
 
     csv_data.each do |row|
