@@ -19,6 +19,16 @@ class ImportProductionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Successfully imported the CSV file.", flash[:notice]
   end
 
+  test "should raise Empty CSV file" do
+    empty_csv_path = Rails.root.join("test", "fixtures", "files", "empty_file.csv")
+    assert File.exist?(empty_csv_path), "The test CSV file was not found."
+    empty_file = Rack::Test::UploadedFile.new(empty_csv_path, "text/csv")
+
+    post import_path, params: { production_file: empty_file }
+    assert_response :bad_request
+    assert_equal "Empty CSV file", @response.body
+  end
+
   test "should raise CSV parsing error" do
     malformed_csv_path = Rails.root.join("test", "fixtures", "files", "malformed_file.csv")
     assert File.exist?(malformed_csv_path), "The test CSV file was not found."
