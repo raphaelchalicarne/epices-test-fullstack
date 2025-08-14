@@ -64,6 +64,19 @@ class ImportProductionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_entity
-    assert_equal "Missing data : Validation failed: Identifier can't be blank", @response.body
+    assert_equal "CSV import error : Validation failed: Identifier can't be blank", @response.body
+  end
+
+  test "should reject CSV with incorrectly formatted date" do
+    incorrect_date_csv_path = Rails.root.join("test", "fixtures", "files", "inverter_production_incorrect_date.csv")
+    assert File.exist?(incorrect_date_csv_path), "The test CSV file was not found."
+    incorrect_date_file = Rack::Test::UploadedFile.new(incorrect_date_csv_path, "text/csv")
+
+    assert_difference("PowerInverterProduction.count", 0) do
+      post import_path, params: { production_file: incorrect_date_file }
+    end
+
+    assert_response :unprocessable_entity
+    assert_equal "CSV import error : invalid date", @response.body
   end
 end

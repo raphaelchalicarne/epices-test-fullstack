@@ -32,15 +32,23 @@ class ImportProductionsController < ApplicationController
     begin
       ActiveRecord::Base.transaction do
         csv_data.each do |row|
-          PowerInverterProduction.create!(
-            identifier: row["identifier"],
-            datetime: DateTime.strptime(row["datetime"].to_s, "%d/%m/%y %H:%M"),
-            energy: row["energy"]
-          )
+          begin
+            PowerInverterProduction.create!(
+              identifier: row["identifier"],
+              datetime: DateTime.strptime(row["datetime"].to_s, "%d/%m/%y %H:%M"),
+              energy: row["energy"]
+            )
+          rescue ActiveRecord::RecordInvalid => e
+            Rails.logger.error "Missing data : #{e.message}"
+            raise
+
+          rescue Date::Error => e
+            raise
+          end
         end
       end
     rescue => e
-      render plain: "Missing data : #{e.message}", status: :unprocessable_entity and return
+      render plain: "CSV import error : #{e.message}", status: :unprocessable_entity and return
     end
 
     respond_to do |format|
