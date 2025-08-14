@@ -7,7 +7,7 @@ class ImportProductionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create PowerInverterProduction" do
-    test_csv_path = Rails.root.join("test", "fixtures", "files", "inverter_production_test.csv")
+    test_csv_path = Rails.root.join("test", "fixtures", "files", "inverter_production.csv")
     assert File.exist?(test_csv_path), "The test CSV file was not found."
     uploaded_file = Rack::Test::UploadedFile.new(test_csv_path, "text/csv")
 
