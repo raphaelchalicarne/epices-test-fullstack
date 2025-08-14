@@ -12,10 +12,10 @@ class ImportProductionsControllerTest < ActionDispatch::IntegrationTest
     uploaded_file = Rack::Test::UploadedFile.new(test_csv_path, "text/csv")
 
     assert_difference("PowerInverterProduction.count", 2) do
-      post :import_path, params: { production_file: uploaded_file }
+      post import_path, params: { production_file: uploaded_file }
     end
 
-    assert_redirected_to your_path
+    assert_redirected_to root_path
     assert_equal "Successfully imported the CSV file.", flash[:notice]
   end
 end
