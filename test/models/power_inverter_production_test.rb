@@ -26,6 +26,10 @@ class PowerInverterProductionTest < ActiveSupport::TestCase
   end
 
   test "should save power_inverter_production with identifier, datetime and energy attributes" do
-    assert power_inverter_productions(:one).save
+    assert power_inverter_productions(:one_july10).save
+  end
+
+  test "#self.identifiers" do
+    assert_equal [ 1, 2 ].to_set, PowerInverterProduction.identifiers.to_set
   end
 end

@@ -2,7 +2,7 @@ class ImportProductionsController < ApplicationController
   def index
     @selected_date = params[:date] ? Date.parse(params[:date]) : Date.today
 
-    @production_data = PowerInverterProduction.identifiers.map { |identifier| 
+    @production_data = PowerInverterProduction.identifiers.map { |identifier|
       { name: identifier, data: PowerInverterProduction.production(identifier, @selected_date) }
     }
   end
