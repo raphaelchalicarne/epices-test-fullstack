@@ -20,5 +20,18 @@
       <%= file_field_tag :production_file, accept: ".csv, text/csv" %>
       <%= submit_tag "Submit" %>
     <% end %>
-  </body>
+
+    <%= form_with url: root_path, method: :get do %>
+      <%= label_tag :date, "Select a date" %>
+      <%= date_field_tag :date, @selected_date %>
+      <%= submit_tag "Submit" %>
+    <% end %>
+
+    <p>Selected date : <%= @selected_date.strftime("%d/%m/%Y") %></p>
+    <% if @production_data.present? %>
+      <%= area_chart @production_data, xtitle: "Time", ytitle: "Energy production" %>
+    <% else %>
+      <p>No data for the selected date.</p>
+    <% end %>
+    </body>
 </html>

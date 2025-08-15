@@ -1,5 +1,12 @@
 class ImportProductionsController < ApplicationController
   def index
+    @selected_date = params[:date] ? Date.parse(params[:date]) : Date.today
+
+    identifier_data = PowerInverterProduction.identifiers.map { |identifier|
+      { name: identifier, data: PowerInverterProduction.production(identifier, @selected_date) }
+    }
+    total_data = { name: "total", data: PowerInverterProduction.total_production(@selected_date) }
+    @production_data = identifier_data.append total_data
   end
 
   def import
