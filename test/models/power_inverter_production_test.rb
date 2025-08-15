@@ -26,10 +26,18 @@ class PowerInverterProductionTest < ActiveSupport::TestCase
   end
 
   test "should save power_inverter_production with identifier, datetime and energy attributes" do
-    assert power_inverter_productions(:one_july10).save
+    assert power_inverter_productions(:one_july_10_06).save
   end
 
-  test "#self.identifiers" do
-    assert_equal [ 1, 2 ].to_set, PowerInverterProduction.identifiers.to_set
+  test "#self.identifiers should return an array of the distinct identifiers" do
+    assert_equal PowerInverterProduction.identifiers.to_set, [ 1, 2 ].to_set
+  end
+
+  test "#self.production" do
+    expected_production = {
+      DateTime.civil(2025, 7, 10, 6, 0, 0, 0).in_time_zone => 343,
+      DateTime.civil(2025, 7, 10, 7, 0, 0, 0).in_time_zone => 2174
+    }
+    assert_equal PowerInverterProduction.production(1, Date.civil(2025, 7, 10)), expected_production
   end
 end
