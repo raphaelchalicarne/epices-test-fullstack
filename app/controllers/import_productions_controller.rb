@@ -10,7 +10,8 @@ class ImportProductionsController < ApplicationController
     else
       error_message = "The file sent is invalid"
       flash.now[:alert] = error_message
-      render :index, status: :bad_request and return    end
+      render :index, status: :bad_request and return
+    end
 
     csv_content = uploaded_file.read
     if csv_content.blank?
