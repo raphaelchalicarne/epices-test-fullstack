@@ -22,7 +22,7 @@
     <% end %>
 
     <%= area_chart PowerInverterProduction.identifiers.map { |identifier| 
-      { name: identifier, data: PowerInverterProduction.production(identifier) }
+      { name: identifier, data: PowerInverterProduction.production(identifier, Date.civil(2025,7,10)) }
     }, stacked: true, xtitle: "Time", ytitle: "Energy production" %>
     </body>
 </html>
