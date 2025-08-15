@@ -40,4 +40,12 @@ class PowerInverterProductionTest < ActiveSupport::TestCase
     }
     assert_equal PowerInverterProduction.production(1, Date.civil(2025, 7, 10)), expected_production
   end
+
+    test "#self.total_production" do
+    expected_production = {
+      DateTime.civil(2025, 7, 10, 6, 0, 0, 0).in_time_zone => 4837,
+      DateTime.civil(2025, 7, 10, 7, 0, 0, 0).in_time_zone => 2174
+    }
+    assert_equal PowerInverterProduction.total_production(Date.civil(2025, 7, 10)), expected_production
+  end
 end

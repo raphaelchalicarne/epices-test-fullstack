@@ -12,4 +12,10 @@ class PowerInverterProduction < ApplicationRecord
         .group_by_hour(:datetime)
         .sum(:energy)
     end
+
+    def self.total_production(date)
+        where(datetime: date.beginning_of_day..date.end_of_day)
+        .group_by_hour(:datetime)
+        .sum(:energy)
+    end
 end
