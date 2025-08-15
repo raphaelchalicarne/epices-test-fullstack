@@ -20,5 +20,9 @@
       <%= file_field_tag :production_file, accept: ".csv, text/csv" %>
       <%= submit_tag "Submit" %>
     <% end %>
-  </body>
+
+    <%= area_chart PowerInverterProduction.identifiers.map { |identifier| 
+      { name: identifier, data: PowerInverterProduction.production(identifier) }
+    }, stacked: true, xtitle: "Time", ytitle: "Energy production" %>
+    </body>
 </html>
