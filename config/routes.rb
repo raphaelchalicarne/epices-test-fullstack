@@ -11,4 +11,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  root "import_productions#index"
+  post "import" => "import_productions#import"
 end
