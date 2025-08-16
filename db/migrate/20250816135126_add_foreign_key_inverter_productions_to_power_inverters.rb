@@ -1,5 +1,5 @@
 class AddForeignKeyInverterProductionsToPowerInverters < ActiveRecord::Migration[8.0]
-	def up
+  def up
     execute "INSERT INTO inverters (id, created_at, updated_at)
       SELECT DISTINCT inverter_identifier, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
       FROM inverter_productions
