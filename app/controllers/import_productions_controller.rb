@@ -1,11 +1,11 @@
 class ImportProductionsController < ApplicationController
-  def index
-    @selected_date = params[:date] ? Date.parse(params[:date]) : Date.today
+  before_action :set_selected_date, only: [:index, :import]
 
-    identifier_data = PowerInverterProduction.identifiers.map { |identifier|
-      { name: identifier, data: PowerInverterProduction.production(identifier, @selected_date) }
+  def index
+    identifier_data = InverterProduction.inverter_identifiers.map { |inverter_identifier|
+      { name: inverter_identifier, data: InverterProduction.production(inverter_identifier, @selected_date) }
     }
-    total_data = { name: "total", data: PowerInverterProduction.total_production(@selected_date) }
+    total_data = { name: "total", data: InverterProduction.total_production(@selected_date) }
     @production_data = identifier_data.append total_data
   end
 
@@ -41,8 +41,9 @@ class ImportProductionsController < ApplicationController
       ActiveRecord::Base.transaction do
         csv_data.each do |row|
           begin
-            PowerInverterProduction.create!(
-              identifier: row["identifier"],
+            inverter = Inverter.find_or_create_by!(id: row["identifier"])
+            InverterProduction.create!(
+              inverter: ,
               datetime: DateTime.strptime(row["datetime"].to_s, "%d/%m/%y %H:%M"),
               energy: row["energy"]
             )
@@ -63,5 +64,11 @@ class ImportProductionsController < ApplicationController
 
     flash.now[:notice] = "Successfully imported the CSV file."
     render :index, status: :created
+  end
+
+  private
+
+  def set_selected_date
+    @selected_date = params[:date] ? Date.parse(params[:date]) : Date.today
   end
 end
