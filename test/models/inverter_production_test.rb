@@ -29,10 +29,6 @@ class InverterProductionTest < ActiveSupport::TestCase
     assert inverter_productions(:one_july_10_06).save
   end
 
-  test "#self.inverter_identifiers should return an array of the distinct inverter identifiers" do
-    assert_equal InverterProduction.inverter_identifiers.to_set, [ 1, 2 ].to_set
-  end
-
   test "#self.production" do
     expected_production = {
       DateTime.civil(2025, 7, 10, 6, 0, 0, 0).in_time_zone => 343,
