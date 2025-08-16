@@ -1,8 +1,8 @@
 class ImportProductionsController < ApplicationController
-  before_action :set_selected_date, only: [:index, :import]
+  before_action :set_selected_date, only: [ :index, :import ]
 
   def index
-    identifier_data = InverterProduction.inverter_identifiers.map { |inverter_identifier|
+    identifier_data = Inverter.identifiers.map { |inverter_identifier|
       { name: inverter_identifier, data: InverterProduction.production(inverter_identifier, @selected_date) }
     }
     total_data = { name: "total", data: InverterProduction.total_production(@selected_date) }
@@ -43,7 +43,7 @@ class ImportProductionsController < ApplicationController
           begin
             inverter = Inverter.find_or_create_by!(id: row["identifier"])
             InverterProduction.create!(
-              inverter: ,
+              inverter: inverter,
               datetime: DateTime.strptime(row["datetime"].to_s, "%d/%m/%y %H:%M"),
               energy: row["energy"]
             )
