@@ -12,17 +12,17 @@
 
 ActiveRecord::Schema[8.0].define(version: 2025_08_16_135126) do
   create_table "inverter_productions", force: :cascade do |t|
-    t.integer "power_inverter_identifier"
+    t.integer "inverter_identifier"
     t.datetime "datetime"
     t.integer "energy"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "power_inverters", force: :cascade do |t|
+  create_table "inverters", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "inverter_productions", "power_inverters", column: "power_inverter_identifier"
+  add_foreign_key "inverter_productions", "inverters", column: "inverter_identifier"
 end
