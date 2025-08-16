@@ -1,21 +1,21 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one_july_10_06:
-  identifier: 1
+  inverter_identifier: 1
   datetime: <%= DateTime.strptime('10/07/25 06:00', '%d/%m/%y %H:%M') %>
   energy: 343
   
 one_july_10_07:
-  identifier: 1
+  inverter_identifier: 1
   datetime: <%= DateTime.strptime('10/07/25 07:00', '%d/%m/%y %H:%M') %>
   energy: 2174
 
 one_july_11:
-  identifier: 1
+  inverter_identifier: 1
   datetime: <%= DateTime.strptime('11/07/25 06:00', '%d/%m/%y %H:%M') %>
   energy: 343
 
 two_july_10:
-  identifier: 2
+  inverter_identifier: 2
   datetime: <%= DateTime.strptime('10/07/25 06:00', '%d/%m/%y %H:%M') %>
   energy: 4494
