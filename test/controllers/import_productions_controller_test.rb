@@ -54,7 +54,7 @@ class ImportProductionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_entity
-    assert_equal "CSV import error : Validation failed: Identifier can't be blank", flash[:alert]
+    assert_equal "CSV import error : invalid date", flash[:alert]
   end
 
   test "should reject CSV with incorrectly formatted date" do
