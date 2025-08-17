@@ -28,12 +28,4 @@ class InverterProductionTest < ActiveSupport::TestCase
   test "should save inverter_production with inverter_identifier, datetime and energy attributes" do
     assert inverter_productions(:one_july_10_06).save
   end
-
-  test "#self.production" do
-    expected_production = {
-      DateTime.civil(2025, 7, 10, 6, 0, 0, 0).in_time_zone => 343,
-      DateTime.civil(2025, 7, 10, 7, 0, 0, 0).in_time_zone => 2174
-    }
-    assert_equal InverterProduction.production(1, Date.civil(2025, 7, 10)), expected_production
-  end
 end

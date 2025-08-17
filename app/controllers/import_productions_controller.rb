@@ -2,8 +2,8 @@ class ImportProductionsController < ApplicationController
   before_action :set_selected_date, only: [ :index, :import ]
 
   def index
-    inverter_data = Inverter.identifiers.map { |inverter_identifier|
-      { name: inverter_identifier, data: InverterProduction.production(inverter_identifier, @selected_date) }
+    inverter_data = Inverter.all.map { |inverter|
+      { name: inverter.id, data: inverter.hourly_production(@selected_date) }
     }
     total_data = { name: "total", data: Inverter.total_hourly_production(@selected_date) }
     @production_data = inverter_data.append total_data

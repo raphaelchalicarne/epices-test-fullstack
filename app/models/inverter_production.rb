@@ -4,10 +4,4 @@ class InverterProduction < ApplicationRecord
   validates :energy, presence: true
 
   belongs_to :inverter, foreign_key: :inverter_identifier
-
-  def self.production(inverter_identifier, date)
-    where(inverter_identifier: inverter_identifier, datetime: date.beginning_of_day..date.end_of_day)
-    .group_by_hour(:datetime)
-    .sum(:energy)
-  end
 end
