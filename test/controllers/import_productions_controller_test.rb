@@ -22,6 +22,20 @@ class ImportProductionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Successfully imported the CSV file.", flash[:notice]
   end
 
+  test "should find or create Inverter" do
+    test_csv_path = Rails.root.join("test", "fixtures", "files", "inverter_production.csv")
+    assert File.exist?(test_csv_path), "The test CSV file was not found."
+    uploaded_file = Rack::Test::UploadedFile.new(test_csv_path, "text/csv")
+
+    # An Inverter with id: 1 already exists due to inverters.yml
+    # The other Inverter with id: 3 should be created
+    assert_difference("Inverter.count", 1) do
+      post import_path, params: { production_file: uploaded_file }
+    end
+
+    assert_equal "Successfully imported the CSV file.", flash[:notice]
+  end
+
   test "The file sent is invalid" do
     post import_path, params: { production_file: :no_file }
     assert_response :bad_request
