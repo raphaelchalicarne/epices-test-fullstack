@@ -5,7 +5,7 @@ class ImportProductionsController < ApplicationController
     inverter_data = Inverter.identifiers.map { |inverter_identifier|
       { name: inverter_identifier, data: InverterProduction.production(inverter_identifier, @selected_date) }
     }
-    total_data = { name: "total", data: InverterProduction.total_production(@selected_date) }
+    total_data = { name: "total", data: Inverter.total_hourly_production(@selected_date) }
     @production_data = inverter_data.append total_data
   end
 
