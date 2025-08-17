@@ -12,4 +12,9 @@ class InverterTest < ActiveSupport::TestCase
     }
     assert_equal Inverter.total_hourly_production(Date.civil(2025, 7, 10)), expected_total_hourly_production
   end
+
+  test "#self.total_daily_production should return the total energy production aggregated among all Inverters" do
+    assert_equal Inverter.total_daily_production(Date.civil(2025, 7, 10)), 7011
+    assert_equal Inverter.total_daily_production(Date.civil(2025, 7, 11)), 343
+  end
 end
