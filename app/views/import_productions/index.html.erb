@@ -33,5 +33,10 @@
     <% else %>
       <p>No data for the selected date.</p>
     <% end %>
+    <% if @daily_data.present? %>
+      <%= column_chart @daily_data, xtitle: "Inverter daily production", ytitle: "Energy production" %>
+    <% else %>
+      <p>No data for the selected date.</p>
+    <% end %>
     </body>
 </html>
