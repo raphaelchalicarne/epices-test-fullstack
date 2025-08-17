@@ -1,3 +1,12 @@
+# Observations personnelles
+J'ai choisi d'afficher les valeurs de production d'énergie à l'aide de graphes. J'ai pour cela utilisé la gem [chartkick](https://github.com/ankane/chartkick) couplée à [groupdate](https://github.com/ankane/groupdate).
+
+J'ai conscience que le graphe de production horaire affiche les valeurs avec un décalage. Les onduleurs commencent à produire de l'énergie le 10 Juillet 2025 à 6h du matin d'après le CSV, et cela apparaît à 8h du matin sur le navigateur. C'est dû au fait que mon ordinateur (et donc mon navigateur) est configuré à l'heure de Paris, à UTC+2 (en prenant en compte l'heure d'été). Par défaut j'ai considéré qu'on importait les données au fuseau horaire UTC+0, d'où le décalage. Une amélioration possible serait de permettre à l'utilisateur d'indiquer le fuseau horaire dans lequel les données ont été enregistrées, ou bien si cette valeur est toujours la même, de la prendre en compte avec un offset lors de l'import des données.
+
+J'ai fait le choix de distinguer le modèle de données en un modèle `Inverter` ayant de multiples enfants `InverterProduction`. J'avais initialement travaillé avec un modèle unique `InverterProduction` appelé anciennement `PowerInverterProduction`. Le principal avantage d'avoir deux modèles, est de pouvoir créer des méthodes afin de récupérer la production horaire/journalière d'un ou plusieurs onduleurs. Cela aurait été possible en ayant que le modèle `InverterProduction`, mais cela nécessitait de passer en argument l'identifiant d'un onduleur.
+
+Enfin, j'ai tenté d'écrire de nombreux tests qui m'ont été très utiles. Je pense qu'il est possible d'étendre la couverture de tests, notamment au niveau des données renvoyées dans `index`.
+
 # Sujet
 
 Une [centrale solaire photovoltaïque](https://fr.wikipedia.org/wiki/Centrale_solaire_photovolta%C3%AFque) dispose d'un appareil appelé [datalogger](https://en.wikipedia.org/wiki/Data_logger) qui nous transmet chaque jour des données de production d'énergie.
