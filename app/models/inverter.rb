@@ -17,4 +17,11 @@ class Inverter < ApplicationRecord
     .where(inverter_productions: { datetime: date.beginning_of_day..date.end_of_day })
     .sum(:energy)
   end
+
+  def hourly_production(date)
+    inverter_productions
+    .where(inverter_productions: { datetime: date.beginning_of_day..date.end_of_day })
+    .group_by_hour(:datetime)
+    .sum(:energy)
+  end
 end
