@@ -28,8 +28,13 @@
     <% end %>
 
     <p>Selected date : <%= @selected_date.strftime("%d/%m/%Y") %></p>
-    <% if @production_data.present? %>
-      <%= area_chart @production_data, xtitle: "Time", ytitle: "Energy production" %>
+    <% if @hourly_data.present? %>
+      <%= area_chart @hourly_data, xtitle: "Time", ytitle: "Energy production" %>
+    <% else %>
+      <p>No data for the selected date.</p>
+    <% end %>
+    <% if @daily_data.present? %>
+      <%= column_chart @daily_data, xtitle: "Inverter daily production", ytitle: "Energy production" %>
     <% else %>
       <p>No data for the selected date.</p>
     <% end %>
