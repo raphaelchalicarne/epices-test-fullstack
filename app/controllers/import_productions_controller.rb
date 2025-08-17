@@ -6,7 +6,7 @@ class ImportProductionsController < ApplicationController
       { name: inverter.id, data: inverter.hourly_production(@selected_date) }
     }
     total_data = { name: "total", data: Inverter.total_hourly_production(@selected_date) }
-    @production_data = inverter_data.append total_data
+    @hourly_data = inverter_data.append total_data
   end
 
   def import
