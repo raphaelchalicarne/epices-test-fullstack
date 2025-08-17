@@ -33,4 +33,11 @@ class InverterTest < ActiveSupport::TestCase
     assert_equal Inverter.find_by(id: 1).hourly_production(Date.civil(2025, 7, 11)), expected_hourly_production_one_11_7
     assert_equal Inverter.find_by(id: 2).hourly_production(Date.civil(2025, 7, 10)), expected_hourly_production_two_10_7
   end
+
+  test "#daily_production should return the total energy production for a given Inverter and a given day" do
+    assert_equal Inverter.find_by(id: 1).daily_production(Date.civil(2025, 7, 10)), 2517
+    assert_equal Inverter.find_by(id: 1).daily_production(Date.civil(2025, 7, 11)), 343
+    assert_equal Inverter.find_by(id: 2).daily_production(Date.civil(2025, 7, 10)), 4494
+    assert_equal Inverter.find_by(id: 2).daily_production(Date.civil(2025, 7, 11)), 0
+  end
 end
